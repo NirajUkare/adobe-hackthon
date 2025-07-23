@@ -1,12 +1,16 @@
+import re
+
 def detect_heading_level(font_size, title_font_size, text):
-    ratio = font_size / title_font_size
-    if ratio >= 0.8 and len(text.split()) <= 10:
-        return "H1"
-    elif ratio >= 0.6 and len(text.split()) <= 10:
-        return "H2"
-    elif ratio >= 0.5 and len(text.split()) <= 12:
-        return "H3"
-    elif ratio >= 0.4 and (text.startswith("1.") or ":" in text):
-        return "H4"
-    else:
-        return None
+    """
+    Detect heading level based on font size and text patterns
+    This is a simplified version - the main logic is now in extractor.py
+    """
+    # This function is kept for compatibility but main logic moved to extractor
+    if font_size >= title_font_size * 0.8:
+        return 'H1'
+    elif font_size >= title_font_size * 0.7:
+        return 'H2' 
+    elif font_size >= title_font_size * 0.6:
+        return 'H3'
+    
+    return None
