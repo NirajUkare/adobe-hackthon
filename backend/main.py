@@ -2,8 +2,8 @@ import os
 import json
 from extractor import extract_outline
 
-input_dir = '/app/input'
-output_dir = '/app/output'
+input_dir = 'input'
+output_dir = 'output'
 
 os.makedirs(output_dir, exist_ok=True)
 
@@ -19,3 +19,5 @@ for filename in os.listdir(input_dir):
                 "title": title,
                 "outline": outline
             }, f, indent=2, ensure_ascii=False)
+
+        print(f"✅ Processed {filename} -> {output_path}")

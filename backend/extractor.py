@@ -1,7 +1,7 @@
 from pdfminer.high_level import extract_pages
 from pdfminer.layout import LTTextContainer, LTChar
-from heuristics import detect_heading_level
 from collections import defaultdict
+from heuristics import detect_heading_level
 
 def extract_outline(pdf_path):
     candidates = []
@@ -15,11 +15,7 @@ def extract_outline(pdf_path):
                     if not text or len(text) > 200:
                         continue
 
-                    font_sizes = []
-                    for char in text_line:
-                        if isinstance(char, LTChar):
-                            font_sizes.append(char.size)
-
+                    font_sizes = [char.size for char in text_line if isinstance(char, LTChar)]
                     if font_sizes:
                         avg_font_size = sum(font_sizes) / len(font_sizes)
                         candidates.append({
@@ -28,13 +24,13 @@ def extract_outline(pdf_path):
                             "page": page_num
                         })
 
-    # Title: largest font on first page
+    # Find title: largest font on page 1
     page1_texts = [c for c in candidates if c["page"] == 1]
-    title_text = max(page1_texts, key=lambda x: x["font_size"]) if page1_texts else max(candidates, key=lambda x: x["font_size"])
-    title_font_size = title_text["font_size"]
+    title_text = max(page1_texts or candidates, key=lambda x: x["font_size"])
     title = title_text["text"]
+    title_font_size = title_text["font_size"]
 
-    # Detect outline
+    # Generate outline
     outline = []
     for c in candidates:
         level = detect_heading_level(c["font_size"], title_font_size)
