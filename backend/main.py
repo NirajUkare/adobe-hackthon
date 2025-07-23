@@ -2,8 +2,8 @@ import os
 import json
 from extractor import extract_outline
 
-input_dir = 'input'
-output_dir = 'output'
+input_dir = './input'
+output_dir = './output'
 
 os.makedirs(output_dir, exist_ok=True)
 

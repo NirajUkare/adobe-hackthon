@@ -33,7 +33,7 @@ def extract_outline(pdf_path):
     # Generate outline
     outline = []
     for c in candidates:
-        level = detect_heading_level(c["font_size"], title_font_size)
+        level = detect_heading_level(c["font_size"], title_font_size, c["text"])
         if level:
             outline.append({
                 "level": level,
